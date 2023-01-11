@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function Ingredient() {
   const {id} = useParams();
   const [item, setItem] = useState(null);
-  const [recipes, setRecipes] = useState([])
+  const [recipes, setRecipes] = useState([]);
   const url = `http://127.0.0.1:8000/api/ingredients/${id}/`;
 
   useEffect(() => {
@@ -16,10 +16,8 @@ export default function Ingredient() {
       .then(response=>response.json())
       .then(result=>{
         for (let i of result){
-          console.log(i.ingredients)
           for (let j of i.ingredients) {
             if (j === url) {
-              console.log(i)
               setRecipes(recipes=>[...recipes, i])
             }
           }
@@ -29,9 +27,26 @@ export default function Ingredient() {
   }, [id]);
 
   if (item) {
-    console.log(recipes)
+    let subList = [];
+    let size = recipes.length / 2;
+    for (let i = 0; i<size; i++){
+      subList.push(recipes[i])
+    };
+    // Помогите мне пожалуйста, я не понимаю почему массив 
+    // рецептов наполняется дважды и мне приходится писать 
+    // страшные костыли вроде 5 строк кода выше 
     return (
-      <div>{item.name}</div>
+      <div>
+        <h2>{item.name}</h2>
+        <div>
+          {subList.map(subListItem => (
+            <Link to={'/recipe/' + subListItem.id} 
+            key={subListItem.id}>
+              /{subListItem.title.slice(0,20)}/
+            </Link>
+          ))}
+        </div>
+      </div>
     )
   } else {
     return (
