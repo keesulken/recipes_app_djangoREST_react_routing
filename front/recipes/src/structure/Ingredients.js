@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export default class Ingredients extends Component {
   constructor(props) {
@@ -32,7 +33,9 @@ export default class Ingredients extends Component {
     )} else {
       return(
         items.map(item=>(
-          <div key={item.id}>{item.name}</div>
+          <div key={item.id}>
+          <Link to={'/ingredients/'+ item.id}>{item.name}</Link>
+          </div>
         ))
       )
     }

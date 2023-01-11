@@ -1,38 +1,23 @@
-import React, { Component } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-export default class User extends Component {
-  constructor(props) {
-    super(props)
-  
-    this.state = {
-       isLoaded: false,
-       item: null,
-    }
-  }
+export default function User() {
+  const {id} = useParams();
+  const [item, setItem] = useState(null);
 
-  componentDidMount(){
-    const params = useParams();
-    fetch(`http://127.0.0.1:8000/api/users/${params.id}`)
-    .then((response)=>response.json())
-    .then((result)=>this.setState({
-      isLoaded: true,
-      item: result,
-    }))
-    .catch(()=>{
-      console.log('error')
-    })
-  }
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/api/users/${id}`)
+    .then(response => response.json())
+    .then(result => setItem(result))
+  }, [id]);
 
-  render() {
-    const { isLoaded, item } = this.state
-    if (!isLoaded){
+  if (item) {
     return (
-      <div>Loading...</div>
-    )} else {
-      return (
-        <div>{item.username}</div>
-      )
-    }
+      <div>{item.username}</div>
+    )
+  } else {
+    return (
+      <h1>Page not found</h1>
+    )
   }
 }

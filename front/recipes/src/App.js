@@ -1,5 +1,4 @@
-import { BrowserRouter } from 'react-router-dom';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './structure/Home';
 import Users from './structure/Users';
@@ -13,12 +12,6 @@ import Recipe from './structure/Recipe';
 function App() {
   return (
     <div className="App">
-      <nav>
-        <Link to='/'>Домой</Link>
-        <Link to='/users'>Пользователи</Link>
-        <Link to='/categories'>Категории</Link>
-        <Link to='/ingredients'>Ингредиенты</Link>
-      </nav>
       <Routes>
         <Route path='/users/:id' element={<User />}/>
         <Route path='/users' element={<Users />}/>

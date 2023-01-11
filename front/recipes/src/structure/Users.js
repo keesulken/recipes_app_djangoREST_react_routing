@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export default class Users extends Component {
   constructor(props) {
@@ -32,7 +33,9 @@ export default class Users extends Component {
     )} else {
       return (
         items.map(user=>(
-          <div key={user.id}>{user.username}</div>
+          <div key={user.id}>
+            <Link to={'/users/' + user.id }>{user.username}</Link>
+          </div>
         ))
       )
     }
